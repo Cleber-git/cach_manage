@@ -4,6 +4,7 @@
 #include <QDebug>
 #include "form.h"
 #include "cont_all.h"
+#include <QFile>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -11,12 +12,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->b_deleteDB->setEnabled(false);
+//    ui->b_deleteDB->setEnabled(false);
     this->setWindowTitle("Banc Manage");
-
-
-
-
+    QString version = read_version();
+    ui->label_5->setText(version);
 }
 
 MainWindow::~MainWindow()
@@ -27,27 +26,37 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+    if( !ui->motivo->text().isEmpty() && !ui->valor->text().isEmpty()){
+        db_manage C_db;
+        QSqlDatabase db;
+        QString path;
 
-    db_manage C_db;
-    QSqlDatabase db;
-    QString path;
+        db = QSqlDatabase::addDatabase("QSQLITE");
 
+        path =  qApp->applicationDirPath() ;
+        path +=  "/cach.db";
+        qDebug()<<path;
 
-    db = QSqlDatabase::addDatabase("QSQLITE");
+        C_db.openDB( path, db );
 
-    path =  qApp->applicationDirPath() ;
-    path +=  "/cach.db";
-    qDebug()<<path;
+        QString preço = ui->valor->text();
+        QString motivo = ui->motivo->text();
 
-    C_db.openDB( path, db );
+        C_db.insert(preço, motivo);
 
-    QString preço = ui->valor->text();
-    QString motivo = ui->motivo->text();
+        ui->motivo->clear();
+        ui->valor->clear();
+    }
+    if (ui->comboBox->currentText() == "Show") {
+        on_pushButton_2_clicked();
+        }
 
-    C_db.insert(preço, motivo);
-
-    ui->motivo->clear();
-    ui->valor->clear();
+    else if(ui->comboBox->currentText() == "Delete DataBase" ){
+        on_b_deleteDB_clicked();
+        }
+        else if(ui->comboBox->currentText() == "Sum"){
+        on_cont_all_clicked();
+    }
 
 }
 
@@ -69,15 +78,13 @@ void MainWindow::on_b_deleteDB_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
     hide();
-
     Form *form= new Form;
     form->show();
-
-
 }
 
 
-void MainWindow::on_cont_all_clicked()
+void MainWindow::
+    on_cont_all_clicked()
 {
     cont_all *c_a = new cont_all();
     c_a->show();
@@ -87,7 +94,21 @@ void MainWindow::on_cont_all_clicked()
 
 void MainWindow::on_place_button_clicked()
 {
-    ui->b_deleteDB->setEnabled(true);
-    ui->place_button->hide();
+//    ui->b_deleteDB->setEnabled(true);
+//    ui->place_button->hide();
 }
 
+QString MainWindow::read_version(){
+
+    QFile f(qApp->applicationDirPath() + "/version");
+
+    if(!f.open(QIODevice::ReadOnly)){
+        qDebug() << "Erro ao tentar ler arquivo!";
+        return "";
+    }
+    QTextStream read(&f);
+
+    QString version = read.readAll();
+
+    return version;
+}

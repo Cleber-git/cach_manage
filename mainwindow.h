@@ -18,6 +18,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    QString read_version();
 private slots:
     void on_pushButton_clicked();
 
