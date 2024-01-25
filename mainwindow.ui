@@ -154,6 +154,11 @@ border-radius: 15px ;
     </property>
     <item>
      <property name="text">
+      <string>Escolha</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
       <string extracomment="Escolha">Show</string>
      </property>
     </item>

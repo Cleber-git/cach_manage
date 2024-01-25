@@ -5,14 +5,15 @@
 #include "form.h"
 #include "cont_all.h"
 #include <QFile>
-
+#include <QComboBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-//    ui->b_deleteDB->setEnabled(false);
+
+    connect(ui->comboBox, SIGNAL(currentIndexChanged(QString)) ,this, SLOT(ChangeModeLabel(QString)) );
     this->setWindowTitle("Banc Manage");
     QString version = read_version();
     ui->label_5->setText(version);
@@ -57,6 +58,20 @@ void MainWindow::on_pushButton_clicked()
         else if(ui->comboBox->currentText() == "Sum"){
         on_cont_all_clicked();
     }
+
+}
+
+void MainWindow::ChangeModeLabel(QString name){
+    qDebug()<< name;
+    if(name != "Escolha"){
+        ui->valor->setEnabled(false);
+        ui->motivo->setEnabled(false);
+        return;
+    }
+    ui->valor->setEnabled(true);
+    ui->motivo->setEnabled(true);
+
+
 
 }
 

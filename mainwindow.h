@@ -19,6 +19,8 @@ public:
     ~MainWindow();
 
     QString read_version();
+public slots:
+    void ChangeModeLabel(QString name);
 private slots:
     void on_pushButton_clicked();
 
