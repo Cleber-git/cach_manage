@@ -41,10 +41,10 @@ void MainWindow::on_pushButton_clicked()
 
     C_db.openDB( path, db );
 
-    QString preço = ui->valor->text();
+    QString preco = ui->valor->text();
     QString motivo = ui->motivo->text();
 
-    C_db.insert(preço, motivo);
+    C_db.insert(preco, motivo);
 
     ui->motivo->clear();
     ui->valor->clear();
