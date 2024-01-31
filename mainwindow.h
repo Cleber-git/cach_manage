@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
-
+#include <QLineEdit>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,21 +19,31 @@ public:
     ~MainWindow();
 
     QString read_version();
+    QString getCombobox();
+    QString getDivida();
+    bool getDivida_IsHiden();
 public slots:
-    void ChangeModeLabel(QString name);
-private slots:
-    void on_pushButton_clicked();
 
-    void on_b_deleteDB_clicked();
+    void ChangeModeLabel(QString name);
+
+
+private slots:
+
+    void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
 
+    void on_b_deleteDB_clicked();
+
     void on_cont_all_clicked();
 
-    void on_place_button_clicked();
+    void radio_change(bool);
+
+    void radio_change1(bool);
 
 private:
     Ui::MainWindow *ui;
+    QString divida;
 
 };
 #endif // MAINWINDOW_H

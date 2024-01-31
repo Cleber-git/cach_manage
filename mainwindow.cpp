@@ -4,8 +4,11 @@
 #include <QDebug>
 #include "form.h"
 #include "cont_all.h"
+#include "choose.h"
 #include <QFile>
 #include <QComboBox>
+#include <QMessageBox>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -13,10 +16,18 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // conecting sinais and slots
+
     connect(ui->comboBox, SIGNAL(currentIndexChanged(QString)) ,this, SLOT(ChangeModeLabel(QString)) );
+    connect(ui->radioButton, SIGNAL(clicked(bool)), this, SLOT(radio_change(bool)));
+    connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(radio_change1(bool)));
+
+
     this->setWindowTitle("Banc Manage");
     QString version = read_version();
     ui->label_5->setText(version);
+    ui->lineEdit->hide();
+    ui->label_6->hide();
 }
 
 MainWindow::~MainWindow()
@@ -27,43 +38,41 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    if( !ui->motivo->text().isEmpty() && !ui->valor->text().isEmpty()){
-        db_manage C_db;
-        QSqlDatabase db;
-        QString path;
 
-        db = QSqlDatabase::addDatabase("QSQLITE");
 
-        path =  qApp->applicationDirPath() ;
-        path +=  "/cach.db";
-        qDebug()<<path;
+    db_manage C_db;
 
-        C_db.openDB( path, db );
 
-        QString preço = ui->valor->text();
-        QString motivo = ui->motivo->text();
+    qDebug()<<ui->lineEdit->text();
 
+    QString preço = ui->valor->text();
+    QString motivo = ui->motivo->text();
+    QString divida = ui->lineEdit->text();
+
+    if( !ui->motivo->text().isEmpty() && !ui->valor->text().isEmpty() && ui->lineEdit->isHidden() ){
         C_db.insert(preço, motivo);
-
-        ui->motivo->clear();
-        ui->valor->clear();
+    }else if( !ui->motivo->text().isEmpty() && !ui->valor->text().isEmpty() && !ui->lineEdit->isHidden() && !ui->lineEdit->text().isEmpty()){
+        C_db.insertDivida(preço, motivo, divida);
     }
-    if (ui->comboBox->currentText() == "Show") {
-        on_pushButton_2_clicked();
-        }
+    ui->motivo->clear();
+    ui->valor->clear();
+    ui->lineEdit->clear();
 
+    if (ui->comboBox->currentText() == "Show") {
+
+        on_pushButton_2_clicked();
+    }
     else if(ui->comboBox->currentText() == "Delete DataBase" ){
         on_b_deleteDB_clicked();
-        }
-        else if(ui->comboBox->currentText() == "Sum"){
+    }
+    else if(ui->comboBox->currentText() == "Sum"){
         on_cont_all_clicked();
     }
-
 }
 
 void MainWindow::ChangeModeLabel(QString name){
     qDebug()<< name;
-    if(name != "Escolha"){
+    if(name != "Escolha" ){
         ui->valor->setEnabled(false);
         ui->motivo->setEnabled(false);
         return;
@@ -76,6 +85,11 @@ void MainWindow::ChangeModeLabel(QString name){
 }
 
 
+
+QString MainWindow::getCombobox(){
+    return ui->comboBox->currentText();
+}
+
 void MainWindow::on_b_deleteDB_clicked()
 {
     db_manage C_db;
@@ -87,19 +101,10 @@ void MainWindow::on_b_deleteDB_clicked()
     path +=  "/cach.db";
 
     C_db.Delete_db( path, db );
+
 }
 
-
-void MainWindow::on_pushButton_2_clicked()
-{
-    hide();
-    Form *form= new Form;
-    form->show();
-}
-
-
-void MainWindow::
-    on_cont_all_clicked()
+void MainWindow::on_cont_all_clicked()
 {
     cont_all *c_a = new cont_all();
     c_a->show();
@@ -107,11 +112,7 @@ void MainWindow::
 }
 
 
-void MainWindow::on_place_button_clicked()
-{
-//    ui->b_deleteDB->setEnabled(true);
-//    ui->place_button->hide();
-}
+
 
 QString MainWindow::read_version(){
 
@@ -126,4 +127,46 @@ QString MainWindow::read_version(){
     QString version = read.readAll();
 
     return version;
+}
+
+void MainWindow::radio_change(bool is_active){
+    if(is_active){
+            // get position of last widgets
+
+            int posx_button = ui->pushButton->geometry().x();
+            int posy_button = ui->pushButton->geometry().y();
+            int height_button = ui->pushButton->geometry().height();
+            int width_button = ui->pushButton->geometry().width();
+
+            //////////////////////////////////////////////////////
+
+            ui->pushButton->setGeometry(posx_button, 480, width_button, height_button);
+
+            ui->label_6->setHidden(false);
+            ui->lineEdit->setHidden(false);
+
+        }
+}
+
+void MainWindow::radio_change1(bool is_active){
+        if(is_active){
+            ui->label_6->hide();
+            ui->lineEdit->hide();
+            ui->pushButton->setGeometry(130, 430, 150, 51);
+        }
+}
+
+QString MainWindow::getDivida(){
+        return divida;
+}
+void MainWindow::on_pushButton_2_clicked()
+{
+        hide();
+        choose *c = new choose();
+        c->show();
+
+}
+
+bool MainWindow::getDivida_IsHiden(){
+        return ui->lineEdit->isHidden();
 }

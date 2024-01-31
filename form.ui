@@ -6,23 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
-    <height>562</height>
+    <width>611</width>
+    <height>638</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(192, 191, 188);</string>
+   <string notr="true">background-color: rgb(154, 153, 150);</string>
   </property>
   <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>80</y>
-     <width>351</width>
-     <height>411</height>
+     <y>120</y>
+     <width>431</width>
+     <height>441</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -32,31 +32,23 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>20</y>
-     <width>291</width>
+     <x>140</x>
+     <y>40</y>
+     <width>301</width>
      <height>51</height>
     </rect>
    </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt; font-weight:700; color:#ffffff;&quot;&gt;Gerencie sua conta!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton">
-   <property name="geometry">
-    <rect>
-     <x>-30</x>
-     <y>490</y>
-     <width>121</width>
-     <height>61</height>
-    </rect>
+   <property name="font">
+    <font>
+     <pointsize>22</pointsize>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(119, 118, 123);
-border-radius: 25px ;</string>
+    <string notr="true">color:rgb(255, 255, 255);</string>
    </property>
    <property name="text">
-    <string>Back</string>
+    <string>Show Manage Dívidas</string>
    </property>
   </widget>
  </widget>

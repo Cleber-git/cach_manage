@@ -17,6 +17,8 @@ public:
     void Delete_db(QString path,  QSqlDatabase& db );
     void show_manager(QTableWidget *tableWidget, QSqlDatabase &db);
     void Sum( QSqlDatabase& db, QLCDNumber* lcdNumber );
+    void insertDivida(QString valor, QString motivo, QString data);
+    void show_managerDivida(QTableWidget *tableWidget, QSqlDatabase &db);
 
 };
 
