@@ -14,9 +14,13 @@ public:
     db_manage();
     void openDB( QString  Path_DB, QSqlDatabase& db ) ;
     void insert( QString valor, QString motivo);
-    void Delete_db(QString path,  QSqlDatabase& db );
+    void Delete_db( QString path, QSqlDatabase& db, QString mode);
     void show_manager(QTableWidget *tableWidget, QSqlDatabase &db);
-    void Sum( QSqlDatabase& db, QLCDNumber* lcdNumber );
+    void Sum( QSqlDatabase& db, QLCDNumber* lcdNumber, QString mode);
+    void insertDivida(QString valor, QString motivo, QString data);
+    void show_managerDivida(QTableWidget *tableWidget, QSqlDatabase &db);
+
+
 
 };
 

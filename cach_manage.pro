@@ -13,19 +13,25 @@ DESTDIR+= bin
 SOURCES += \
     cont_all.cpp \
     db_manage.cpp \
+    dialog.cpp \
     form.cpp \
+    form2.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     cont_all.h \
     db_manage.h \
+    dialog.h \
     form.h \
+    form2.h \
     mainwindow.h
 
 FORMS += \
     cont_all.ui \
+    dialog.ui \
     form.ui \
+    form2.ui \
     mainwindow.ui
 
 # Default rules for deployment.

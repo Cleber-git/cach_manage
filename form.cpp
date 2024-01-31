@@ -10,35 +10,22 @@ Form::Form(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    this->setWindowTitle("Tabela Geral");;
+    this->setWindowTitle("Tabela Geral");
+
 
     qDebug() << "Passei pelo construtor do form";
     db_manage C_db;
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     QString path;
-    path = qApp->applicationDirPath() + "\cach.db";
+    path = qApp->applicationDirPath() + "/cach.db";
 
 /////////////////////////////////////////////////////////////////////////////////
 
-    int row = 0;
 
     C_db.openDB(path, db);
-    C_db.show_manager(ui->tableWidget, db);
-
-
-
-
-
-
+    C_db.show_managerDivida(ui->tableWidget, db);
 
 }
-
-
-
-
-
-
-
 
 
 Form::~Form()
