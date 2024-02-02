@@ -221,7 +221,7 @@ border-radius: 15px ;
      <string>Data</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -234,7 +234,7 @@ border-radius: 15px ;
      <item>
       <widget class="QRadioButton" name="radioButton">
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">background: yellow ;</string>
        </property>
        <property name="text">
         <string>Dívida</string>
@@ -243,6 +243,9 @@ border-radius: 15px ;
      </item>
      <item>
       <widget class="QRadioButton" name="radioButton_2">
+       <property name="styleSheet">
+        <string notr="true">background: yellow ;</string>
+       </property>
        <property name="text">
         <string>Gastos</string>
        </property>
