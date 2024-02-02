@@ -15,7 +15,7 @@ Form2::Form2(QWidget *parent) :
     db_manage C_db;
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     QString path;
-    path = qApp->applicationDirPath() + "\cach.db";
+    path = qApp->applicationDirPath() + "/cach.db";
 
 
 

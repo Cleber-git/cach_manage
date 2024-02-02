@@ -41,6 +41,7 @@
    <property name="font">
     <font>
      <pointsize>22</pointsize>
+     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -49,6 +50,30 @@
    </property>
    <property name="text">
     <string>Show Manage Dívidas</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>-20</x>
+     <y>560</y>
+     <width>101</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>15</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius: 18px ;
+background-color: rgb(119, 118, 123);padding-left: 25px ;</string>
+   </property>
+   <property name="text">
+    <string>Back</string>
    </property>
   </widget>
  </widget>

@@ -17,9 +17,11 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-
+public slots:
+    void ChangeSum(QString mode);
 private:
     Ui::cont_all *ui;
+    QString modeSum;
 };
 
 #endif // CONT_ALL_H

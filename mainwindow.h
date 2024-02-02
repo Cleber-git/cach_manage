@@ -19,7 +19,6 @@ public:
     ~MainWindow();
 
     QString read_version();
-    QString getCombobox();
     QString getDivida();
     bool getDivida_IsHiden();
 public slots:
@@ -41,9 +40,11 @@ private slots:
 
     void radio_change1(bool);
 
+
 private:
     Ui::MainWindow *ui;
     QString divida;
+    QString Where_I_came_from;
 
 };
 #endif // MAINWINDOW_H

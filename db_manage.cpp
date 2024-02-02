@@ -4,6 +4,8 @@
 #include<QApplication>
 #include <QTableWidget>
 #include "mainwindow.h"
+
+
 db_manage::db_manage()
 {
 
@@ -37,7 +39,7 @@ void db_manage::insertDivida(QString valor, QString motivo, QString data){
 
 
 
-    sql = "INSERT INTO dividas (valor, motivo, data) VALUES (:valor, :motivo, :data)";
+    sql = "INSERT INTO divida (valor, motivo, data) VALUES (:valor, :motivo, :data)";
 
     query.prepare(sql);
 
@@ -63,6 +65,7 @@ void db_manage::insertDivida(QString valor, QString motivo, QString data){
 }
 
 void db_manage::insert( QString valor, QString motivo){
+    qDebug() << "[insert]";
 
     QSqlDatabase db;
     QString path;
@@ -113,7 +116,7 @@ void db_manage::show_managerDivida(QTableWidget *tableWidget, QSqlDatabase &db){
         QSqlQuery query;
         QString sql;
 
-        sql = "SELECT valor, motivo, data FROM dividas";
+        sql = "SELECT valor, motivo, data FROM divida";
 
         query.prepare(sql);
 
@@ -121,9 +124,9 @@ void db_manage::show_managerDivida(QTableWidget *tableWidget, QSqlDatabase &db){
 
             qDebug() << "Falha ao abrir a base de dados!";
             return;
+
         }
 
-        //    qDebug() <<"passei";
         int count = 0;
         while(query.next()){
 
@@ -197,17 +200,17 @@ void db_manage::show_manager(QTableWidget *tableWidget, QSqlDatabase &db){
 
 }
 
-void db_manage::Sum( QSqlDatabase& db, QLCDNumber* lcdNumber ){
+void db_manage::Sum( QSqlDatabase& db, QLCDNumber* lcdNumber, QString mode ){
 
     int valor = 0;
 
     QSqlQuery query;
-    QString sql = "SELECT valor FROM gastos";
+    QString sql = "SELECT valor FROM :gastos";
     QString path = qApp->applicationDirPath() + "/cach.db";
     openDB(path, db);
 
     query.prepare(sql);
-
+    query.bindValue(":gastos", mode);
     if(!query.exec()){
 
         qDebug()<<"Falha na execução da query!";
@@ -228,7 +231,7 @@ void db_manage::Sum( QSqlDatabase& db, QLCDNumber* lcdNumber ){
 
 
 
-void db_manage::Delete_db( QString path, QSqlDatabase& db ){
+void db_manage::Delete_db( QString path, QSqlDatabase& db, QString mode){
 
     MainWindow mw;
 
@@ -238,10 +241,13 @@ void db_manage::Delete_db( QString path, QSqlDatabase& db ){
 
 
 
-    sql = "DELETE FROM mes";
-    if(mw.getCombobox() == "Dívida"){
+    sql = "DELETE FROM gastos";
+
+    if(mode == "divida"){
         sql =  "DELETE FROM divida";
-}
+    }
+
+
     query.prepare(sql);
     if (query.exec()) {
         qDebug()<<"BASE DE DADOS DELETADA COM SUCESSO!";
@@ -249,3 +255,5 @@ void db_manage::Delete_db( QString path, QSqlDatabase& db ){
         qDebug()<<"NÃO FOI POSSÍVEL DELETAR A BASE DE DADOS!";
     }
 }
+
+

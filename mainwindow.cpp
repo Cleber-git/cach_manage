@@ -1,13 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "db_manage.h"
-#include <QDebug>
 #include "form.h"
+#include "form2.h"
 #include "cont_all.h"
-#include "choose.h"
+
 #include <QFile>
 #include <QComboBox>
 #include <QMessageBox>
+#include <QDebug>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -16,11 +17,17 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->radioButton_2->setChecked(true);
+    cont_all *ct_a = new cont_all();
+
     // conecting sinais and slots
 
     connect(ui->comboBox, SIGNAL(currentIndexChanged(QString)) ,this, SLOT(ChangeModeLabel(QString)) );
     connect(ui->radioButton, SIGNAL(clicked(bool)), this, SLOT(radio_change(bool)));
     connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(radio_change1(bool)));
+
+    connect(ui->radioButton, SIGNAL(clicked(bool)), ct_a, SLOT(ChangeSum(QString)));
+    connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(ChangeSum(QString)));
 
 
     this->setWindowTitle("Banc Manage");
@@ -39,20 +46,22 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
 
-
     db_manage C_db;
 
 
     qDebug()<<ui->lineEdit->text();
 
-    QString preço = ui->valor->text();
+    QString preco = ui->valor->text();
     QString motivo = ui->motivo->text();
     QString divida = ui->lineEdit->text();
 
+
+//    C_db.insert(preco, motivo);
+
     if( !ui->motivo->text().isEmpty() && !ui->valor->text().isEmpty() && ui->lineEdit->isHidden() ){
-        C_db.insert(preço, motivo);
+        C_db.insert(preco, motivo);
     }else if( !ui->motivo->text().isEmpty() && !ui->valor->text().isEmpty() && !ui->lineEdit->isHidden() && !ui->lineEdit->text().isEmpty()){
-        C_db.insertDivida(preço, motivo, divida);
+        C_db.insertDivida(preco, motivo, divida);
     }
     ui->motivo->clear();
     ui->valor->clear();
@@ -86,9 +95,7 @@ void MainWindow::ChangeModeLabel(QString name){
 
 
 
-QString MainWindow::getCombobox(){
-    return ui->comboBox->currentText();
-}
+
 
 void MainWindow::on_b_deleteDB_clicked()
 {
@@ -99,16 +106,22 @@ void MainWindow::on_b_deleteDB_clicked()
     QString path;
     path =  qApp->applicationDirPath() ;
     path +=  "/cach.db";
+    if(ui->radioButton->isChecked()){
+        C_db.Delete_db( path, db, "divida" );
 
-    C_db.Delete_db( path, db );
+    }else if(ui->radioButton_2->isChecked()){
+        C_db.Delete_db( path, db, "gastos" );
 
+    }
 }
 
 void MainWindow::on_cont_all_clicked()
 {
-    cont_all *c_a = new cont_all();
-    c_a->show();
+
+    cont_all * ct_a= new cont_all();
+    ct_a->show();
     hide();
+
 }
 
 
@@ -116,7 +129,7 @@ void MainWindow::on_cont_all_clicked()
 
 QString MainWindow::read_version(){
 
-    QFile f(qApp->applicationDirPath() + "/version");
+    QFile f(qApp->applicationDirPath() + "/version.txt");
 
     if(!f.open(QIODevice::ReadOnly)){
         qDebug() << "Erro ao tentar ler arquivo!";
@@ -134,7 +147,7 @@ void MainWindow::radio_change(bool is_active){
             // get position of last widgets
 
             int posx_button = ui->pushButton->geometry().x();
-            int posy_button = ui->pushButton->geometry().y();
+//            int posy_button = ui->pushButton->geometry().y();
             int height_button = ui->pushButton->geometry().height();
             int width_button = ui->pushButton->geometry().width();
 
@@ -162,8 +175,14 @@ QString MainWindow::getDivida(){
 void MainWindow::on_pushButton_2_clicked()
 {
         hide();
-        choose *c = new choose();
-        c->show();
+        if(ui->radioButton_2->isChecked()){
+            Form2 *form2 = new Form2();
+            form2->show();
+        }else if (ui->radioButton->isChecked()) {
+            Form *form = new Form();
+            form->show();
+
+}
 
 }
 

@@ -2,12 +2,14 @@
 #include "ui_cont_all.h"
 #include "db_manage.h"
 #include "mainwindow.h"
+#include <QDebug>
 
 cont_all::cont_all(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::cont_all)
 {
     ui->setupUi(this);
+
     this->setWindowTitle("TOTAL");
 
     QSqlDatabase db;
@@ -16,14 +18,20 @@ cont_all::cont_all(QWidget *parent) :
     db.setDatabaseName(path);
     db_manage db_m;
     db_m.openDB(path, db);
-    db_m.Sum(db, ui->lcdNumber);
+    db_m.Sum(db, ui->lcdNumber, modeSum);
 }
+
+
 
 cont_all::~cont_all()
 {
     delete ui;
 }
 
+
+void cont_all::ChangeSum(QString mode){
+    modeSum = mode;
+}
 void cont_all::on_pushButton_clicked()
 {
     MainWindow *mw = new MainWindow();
