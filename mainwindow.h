@@ -19,11 +19,17 @@ public:
     ~MainWindow();
 
     QString read_version();
-    QString getDivida();
+    QString getActiveRadio();
     bool getDivida_IsHiden();
+
+
+signals:
+    QString sendTableDB(QString name);
 public slots:
 
     void ChangeModeLabel(QString name);
+
+
 
 
 private slots:
@@ -37,14 +43,15 @@ private slots:
     void on_cont_all_clicked();
 
     void radio_change(bool);
-
     void radio_change1(bool);
+
+
 
 
 private:
     Ui::MainWindow *ui;
     QString divida;
-    QString Where_I_came_from;
+//    QString Where_I_came_from;
 
 };
 #endif // MAINWINDOW_H

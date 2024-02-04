@@ -9,7 +9,7 @@
 #include <QComboBox>
 #include <QMessageBox>
 #include <QDebug>
-
+#include <cont_all.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     ui->radioButton_2->setChecked(true);
-    cont_all *ct_a = new cont_all();
+    cont_all ct_a;
 
     // conecting sinais and slots
 
@@ -26,8 +26,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->radioButton, SIGNAL(clicked(bool)), this, SLOT(radio_change(bool)));
     connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(radio_change1(bool)));
 
-    connect(ui->radioButton, SIGNAL(clicked(bool)), ct_a, SLOT(ChangeSum(QString)));
-    connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(ChangeSum(QString)));
+    connect(ui->radioButton, SIGNAL(clicked(bool)), &ct_a, SLOT(ChangeSum(bool)));
+    connect(this, SIGNAL(sendTableDB(QString)), &ct_a, SLOT(Slot_execute(QString)));
+//    connect(ui->radioButton_2, SIGNAL(), ct_a, SLOT(ChangeSum(bool)));
 
 
     this->setWindowTitle("Banc Manage");
@@ -46,6 +47,8 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
 
+    QString name = getActiveRadio();
+    qDebug()<<"Nome: " << name;
     db_manage C_db;
 
 
@@ -76,6 +79,7 @@ void MainWindow::on_pushButton_clicked()
     }
     else if(ui->comboBox->currentText() == "Sum"){
         on_cont_all_clicked();
+        emit sendTableDB(name);
     }
 }
 
@@ -107,7 +111,7 @@ void MainWindow::on_b_deleteDB_clicked()
     path =  qApp->applicationDirPath() ;
     path +=  "/cach.db";
     if(ui->radioButton->isChecked()){
-        C_db.Delete_db( path, db, "divida" );
+        C_db.Delete_db( path, db, "dividas" );
 
     }else if(ui->radioButton_2->isChecked()){
         C_db.Delete_db( path, db, "gastos" );
@@ -117,6 +121,8 @@ void MainWindow::on_b_deleteDB_clicked()
 
 void MainWindow::on_cont_all_clicked()
 {
+
+
 
     cont_all * ct_a= new cont_all();
     ct_a->show();
@@ -143,15 +149,16 @@ QString MainWindow::read_version(){
 }
 
 void MainWindow::radio_change(bool is_active){
+
     if(is_active){
+
             // get position of last widgets
 
             int posx_button = ui->pushButton->geometry().x();
-//            int posy_button = ui->pushButton->geometry().y();
             int height_button = ui->pushButton->geometry().height();
             int width_button = ui->pushButton->geometry().width();
 
-            //////////////////////////////////////////////////////
+            // Set positions of the current widgets
 
             ui->pushButton->setGeometry(posx_button, 480, width_button, height_button);
 
@@ -159,6 +166,7 @@ void MainWindow::radio_change(bool is_active){
             ui->lineEdit->setHidden(false);
 
         }
+
 }
 
 void MainWindow::radio_change1(bool is_active){
@@ -169,9 +177,13 @@ void MainWindow::radio_change1(bool is_active){
         }
 }
 
-QString MainWindow::getDivida(){
-        return divida;
+QString MainWindow::getActiveRadio(){
+        if(ui->radioButton->isChecked()){
+            return "dividas";
+        }
+        return "gastos";
 }
+
 void MainWindow::on_pushButton_2_clicked()
 {
         hide();

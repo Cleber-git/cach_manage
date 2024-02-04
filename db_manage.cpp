@@ -39,7 +39,7 @@ void db_manage::insertDivida(QString valor, QString motivo, QString data){
 
 
 
-    sql = "INSERT INTO divida (valor, motivo, data) VALUES (:valor, :motivo, :data)";
+    sql = "INSERT INTO dividas (valor, motivo, data) VALUES (:valor, :motivo, :data)";
 
     query.prepare(sql);
 
@@ -116,7 +116,7 @@ void db_manage::show_managerDivida(QTableWidget *tableWidget, QSqlDatabase &db){
         QSqlQuery query;
         QString sql;
 
-        sql = "SELECT valor, motivo, data FROM divida";
+        sql = "SELECT valor, motivo, data FROM dividas";
 
         query.prepare(sql);
 
@@ -202,15 +202,22 @@ void db_manage::show_manager(QTableWidget *tableWidget, QSqlDatabase &db){
 
 void db_manage::Sum( QSqlDatabase& db, QLCDNumber* lcdNumber, QString mode ){
 
+
     int valor = 0;
 
+    qDebug()<<"Sum";
+    qDebug()<<"mode from slot in sum: " << mode;
+
     QSqlQuery query;
-    QString sql = "SELECT valor FROM :gastos";
+
     QString path = qApp->applicationDirPath() + "/cach.db";
     openDB(path, db);
 
+    QString sql =QString( "SELECT valor FROM %1").arg(mode);
+
     query.prepare(sql);
-    query.bindValue(":gastos", mode);
+    query.bindValue(":mode" , mode);
+
     if(!query.exec()){
 
         qDebug()<<"Falha na execução da query!";
@@ -221,12 +228,12 @@ void db_manage::Sum( QSqlDatabase& db, QLCDNumber* lcdNumber, QString mode ){
     while(query.next()){
 
         valor += query.value(0).toDouble();
-        qDebug()<<valor;
+        qDebug()<<" contagem " << valor;
 
 
     }
-    lcdNumber->display(valor);
-
+    lcdNumber->display("ihu");
+    lcdNumber->update();
 }
 
 
@@ -241,14 +248,14 @@ void db_manage::Delete_db( QString path, QSqlDatabase& db, QString mode){
 
 
 
-    sql = "DELETE FROM gastos";
+    sql = "DELETE FROM :mode";
 
-    if(mode == "divida"){
-        sql =  "DELETE FROM divida";
-    }
+
 
 
     query.prepare(sql);
+    query.bindValue(":mode", mode);
+
     if (query.exec()) {
         qDebug()<<"BASE DE DADOS DELETADA COM SUCESSO!";
     }else{
