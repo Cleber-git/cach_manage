@@ -116,7 +116,7 @@ void db_manage::show_managerDivida(QTableWidget *tableWidget, QSqlDatabase &db){
         QSqlQuery query;
         QString sql;
 
-        sql = "SELECT valor, motivo, data FROM divida";
+        sql = "SELECT valor, motivo, data FROM dividas";
 
         query.prepare(sql);
 
@@ -205,12 +205,12 @@ void db_manage::Sum( QSqlDatabase& db, QLCDNumber* lcdNumber, QString mode ){
     int valor = 0;
 
     QSqlQuery query;
-    QString sql = "SELECT valor FROM :gastos";
+    QString sql = "SELECT valor FROM :mode";
     QString path = qApp->applicationDirPath() + "/cach.db";
     openDB(path, db);
 
     query.prepare(sql);
-    query.bindValue(":gastos", mode);
+    query.bindValue(":mode", mode);
     if(!query.exec()){
 
         qDebug()<<"Falha na execução da query!";
