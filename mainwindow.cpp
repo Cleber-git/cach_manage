@@ -16,9 +16,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ct_a->show();
+    ct_a->setHidden(true);
 
-    ui->radioButton_2->setChecked(true);
-    cont_all *ct_a = new cont_all();
+//    ui->radioButton_2->setChecked(true);
+//    cont_all *ct_a = new cont_all();
 
     // conecting sinais and slots
 
@@ -26,8 +28,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->radioButton, SIGNAL(clicked(bool)), this, SLOT(radio_change(bool)));
     connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(radio_change1(bool)));
 
-    connect(ui->radioButton, SIGNAL(clicked(bool)), ct_a, SLOT(ChangeSum(QString)));
-    connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(ChangeSum(QString)));
+    connect(ui->radioButton, SIGNAL(clicked(bool)), this, SLOT(get_Name_Column(bool)));
+    connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(get_Name_Column(bool)));
+
+    connect(this, SIGNAL(send(QString)), ct_a, SLOT(ChangeSum(QString)));
 
 
     this->setWindowTitle("Banc Manage");
@@ -69,13 +73,18 @@ void MainWindow::on_pushButton_clicked()
 
     if (ui->comboBox->currentText() == "Show") {
 
-        on_pushButton_2_clicked();
+        pushButton_2_clicked();
     }
     else if(ui->comboBox->currentText() == "Delete DataBase" ){
-        on_b_deleteDB_clicked();
+        b_deleteDB_clicked();
     }
     else if(ui->comboBox->currentText() == "Sum"){
-        on_cont_all_clicked();
+        if(name_column!= 0){
+            qDebug()<< "name: "<< name_column;
+
+            emit send(name_column);
+            cont_all_clicked();
+        }
     }
 }
 
@@ -97,7 +106,7 @@ void MainWindow::ChangeModeLabel(QString name){
 
 
 
-void MainWindow::on_b_deleteDB_clicked()
+void MainWindow::b_deleteDB_clicked()
 {
     db_manage C_db;
     QSqlDatabase db;
@@ -115,13 +124,12 @@ void MainWindow::on_b_deleteDB_clicked()
     }
 }
 
-void MainWindow::on_cont_all_clicked()
+void MainWindow::cont_all_clicked()
 {
 
-    cont_all * ct_a= new cont_all();
-    ct_a->show();
-    hide();
 
+    ct_a->setHidden(false);
+    setHidden(true);
 }
 
 
@@ -169,10 +177,8 @@ void MainWindow::radio_change1(bool is_active){
         }
 }
 
-QString MainWindow::getDivida(){
-        return divida;
-}
-void MainWindow::on_pushButton_2_clicked()
+
+void MainWindow::pushButton_2_clicked()
 {
         hide();
         if(ui->radioButton_2->isChecked()){
@@ -182,10 +188,14 @@ void MainWindow::on_pushButton_2_clicked()
             Form *form = new Form();
             form->show();
 
-}
+        }
 
 }
 
-bool MainWindow::getDivida_IsHiden(){
-        return ui->lineEdit->isHidden();
+void MainWindow::get_Name_Column(bool name){
+        if(ui->radioButton->isChecked()){
+           name_column ="dividas";
+            return;
+        }
+        name_column=  "gastos";
 }

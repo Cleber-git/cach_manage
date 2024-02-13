@@ -12,13 +12,7 @@ cont_all::cont_all(QWidget *parent) :
 
     this->setWindowTitle("TOTAL");
 
-    QSqlDatabase db;
-    QString path = qApp->applicationDirPath() + "/cach.db";
-    db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(path);
-    db_manage db_m;
-    db_m.openDB(path, db);
-    db_m.Sum(db, ui->lcdNumber, modeSum);
+
 }
 
 
@@ -30,7 +24,16 @@ cont_all::~cont_all()
 
 
 void cont_all::ChangeSum(QString mode){
-    modeSum = mode;
+    qDebug()<<"Passei pelo slot";
+
+
+    QSqlDatabase db;
+    QString path = qApp->applicationDirPath() + "/cach.db";
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(path);
+    db_manage db_m;
+//    db_m.openDB(path, db);
+    db_m.Sum(db, ui->lcdNumber, mode);
 }
 void cont_all::on_pushButton_clicked()
 {

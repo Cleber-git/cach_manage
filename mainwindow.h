@@ -6,6 +6,8 @@
 #include <QtSql/QSqlQuery>
 #include <QLineEdit>
 
+#include "cont_all.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,24 +19,25 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QString name_column;
 
     QString read_version();
-    QString getDivida();
-    bool getDivida_IsHiden();
+signals:
+    void send(QString name);
 public slots:
 
     void ChangeModeLabel(QString name);
+    void pushButton_2_clicked();
 
+    void b_deleteDB_clicked();
+
+    void cont_all_clicked();
+    void get_Name_Column(bool name);
 
 private slots:
 
     void on_pushButton_clicked();
 
-    void on_pushButton_2_clicked();
-
-    void on_b_deleteDB_clicked();
-
-    void on_cont_all_clicked();
 
     void radio_change(bool);
 
@@ -44,7 +47,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QString divida;
-    QString Where_I_came_from;
+
+    cont_all * ct_a= new cont_all();
 
 };
 #endif // MAINWINDOW_H

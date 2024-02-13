@@ -205,12 +205,11 @@ void db_manage::Sum( QSqlDatabase& db, QLCDNumber* lcdNumber, QString mode ){
     int valor = 0;
 
     QSqlQuery query;
-    QString sql = "SELECT valor FROM :mode";
+    QString sql = QString("SELECT valor FROM %1").arg(mode);
     QString path = qApp->applicationDirPath() + "/cach.db";
     openDB(path, db);
 
     query.prepare(sql);
-    query.bindValue(":mode", mode);
     if(!query.exec()){
 
         qDebug()<<"Falha na execução da query!";
