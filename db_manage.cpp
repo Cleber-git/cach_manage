@@ -38,14 +38,14 @@ void db_manage::insertDivida(QString valor, QString motivo, QString data){
     QString sql;
 
 
-
-    sql = "INSERT INTO divida (valor, motivo, data) VALUES (:valor, :motivo, :data)";
-
-    query.prepare(sql);
-
     qDebug() << "Valor" << valor;
     qDebug() << "Motivo" << motivo;
     qDebug() << "Divida" << data;
+
+    sql = "INSERT INTO dividas (valor, motivo, data) VALUES (:valor, :motivo, :data)";
+
+    query.prepare(sql);
+
 
     query.bindValue(":valor", valor);
     query.bindValue(":motivo", motivo);
@@ -60,6 +60,7 @@ void db_manage::insertDivida(QString valor, QString motivo, QString data){
     }else{
 
         qDebug() << "Executado com sucesso!";
+        db.close();
 
     }
 }
@@ -100,12 +101,12 @@ void db_manage::insert( QString valor, QString motivo){
     }else{
 
         qDebug() << "Executado com sucesso! :: insert";
+        db.close();
 
     }
 }
 
 void db_manage::show_managerDivida(QTableWidget *tableWidget, QSqlDatabase &db){
-    {
 
         tableWidget->setColumnCount(3);
         tableWidget->setColumnWidth(0, 250);
@@ -149,9 +150,9 @@ void db_manage::show_managerDivida(QTableWidget *tableWidget, QSqlDatabase &db){
 
         }
 
-
-    }
+    db.close();
 }
+
 
 
 
@@ -196,6 +197,7 @@ void db_manage::show_manager(QTableWidget *tableWidget, QSqlDatabase &db){
 
 
     }
+    db.close();
 
 
 }
@@ -225,7 +227,7 @@ void db_manage::Sum( QSqlDatabase& db, QLCDNumber* lcdNumber, QString mode ){
 
     }
     lcdNumber->display(valor);
-
+    db.close();
 }
 
 
@@ -243,13 +245,15 @@ void db_manage::Delete_db( QString path, QSqlDatabase& db, QString mode){
     sql = "DELETE FROM gastos";
 
     if(mode == "divida"){
-        sql =  "DELETE FROM divida";
+        sql =  "DELETE FROM dividas";
+
     }
 
 
     query.prepare(sql);
     if (query.exec()) {
         qDebug()<<"BASE DE DADOS DELETADA COM SUCESSO!";
+        db.close();
     }else{
         qDebug()<<"NÃO FOI POSSÍVEL DELETAR A BASE DE DADOS!";
     }

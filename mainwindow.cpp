@@ -60,7 +60,6 @@ void MainWindow::on_pushButton_clicked()
     QString divida = ui->lineEdit->text();
 
 
-//    C_db.insert(preco, motivo);
 
     if( !ui->motivo->text().isEmpty() && !ui->valor->text().isEmpty() && ui->lineEdit->isHidden() ){
         C_db.insert(preco, motivo);
