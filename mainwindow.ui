@@ -6,24 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
-    <height>600</height>
+    <width>1890</width>
+    <height>920</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0 rgba(0, 0, 0, 107), stop:0.375 rgba(255, 255, 0, 69), stop:0.423533 rgba(251, 255, 0, 145), stop:0.45 rgba(247, 255, 0, 208), stop:0.477581 rgba(255, 244, 71, 130), stop:0.518717 rgba(255, 218, 71, 130), stop:0.55 rgba(255, 255, 0, 255), stop:0.57754 rgba(255, 203, 0, 130), stop:0.625 rgba(255, 255, 0, 69), stop:1 rgba(255, 255, 0, 69));</string>
+   <string notr="true">/*background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0 rgba(0, 0, 0, 107), stop:0.375 rgba(255, 255, 0, 69), stop:0.423533 rgba(251, 255, 0, 145), stop:0.45 rgba(247, 255, 0, 208), stop:0.477581 rgba(255, 244, 71, 130), stop:0.518717 rgba(255, 218, 71, 130), stop:0.55 rgba(255, 255, 0, 255), stop:0.57754 rgba(255, 203, 0, 130), stop:0.625 rgba(255, 255, 0, 69), stop:1 rgba(255, 255, 0, 69));*/
+
+background-color: #1A1B1C;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>30</y>
-      <width>181</width>
-      <height>171</height>
+      <x>750</x>
+      <y>60</y>
+      <width>371</width>
+      <height>311</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -37,11 +39,15 @@ border-image: url(:/new/1355772349a91d6fd6ea7ee29c9c5f50-a-cone-de-dinheiro-de-m
    <widget class="QLineEdit" name="valor">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>280</y>
-      <width>226</width>
-      <height>26</height>
+      <x>730</x>
+      <y>550</y>
+      <width>500</width>
+      <height>50</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: grey;
+padding-left: 15px ; </string>
     </property>
     <property name="placeholderText">
      <string>           Valor de pagamento</string>
@@ -50,11 +56,15 @@ border-image: url(:/new/1355772349a91d6fd6ea7ee29c9c5f50-a-cone-de-dinheiro-de-m
    <widget class="QLineEdit" name="motivo">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>340</y>
-      <width>226</width>
-      <height>26</height>
+      <x>730</x>
+      <y>630</y>
+      <width>500</width>
+      <height>50</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: grey;
+padding-left: 15px ;</string>
     </property>
     <property name="placeholderText">
      <string>         Descrição de pagamento</string>
@@ -66,20 +76,24 @@ border-image: url(:/new/1355772349a91d6fd6ea7ee29c9c5f50-a-cone-de-dinheiro-de-m
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>430</y>
-      <width>150</width>
-      <height>51</height>
+      <x>830</x>
+      <y>720</y>
+      <width>281</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton{
-background-color: rgb(216, 164, 24);
+background-color: #453a38;
 border-radius: 15px ;
+font-size: 35px ;
+font-weight: bold ;
+color: white ;
 }
 QPushButton::hover{  
-	background-color: rgb(249, 240, 107);
+background-color: #f1632d;
 border-radius: 15px ;
+color: black ;
 }
 
 QPushButton::pressed{  
@@ -95,7 +109,7 @@ border-radius: 15px ;
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>830</x>
       <y>220</y>
       <width>181</width>
       <height>41</height>
@@ -111,14 +125,16 @@ border-radius: 15px ;
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>280</y>
+      <x>630</x>
+      <y>560</y>
       <width>67</width>
       <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background: transparent ;</string>
+     <string notr="true">background: transparent ;
+font-size: 22px ;
+color: white ;</string>
     </property>
     <property name="text">
      <string>Value:</string>
@@ -127,14 +143,16 @@ border-radius: 15px ;
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>340</y>
-      <width>67</width>
+      <x>630</x>
+      <y>640</y>
+      <width>81</width>
       <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background: transparent ;</string>
+     <string notr="true">background: transparent ;
+font-size: 22px ;
+color: white ;</string>
     </property>
     <property name="text">
      <string>Explain:</string>
@@ -143,14 +161,18 @@ border-radius: 15px ;
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>1540</x>
       <y>20</y>
-      <width>101</width>
-      <height>26</height>
+      <width>311</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(216, 164, 24) ; </string>
+     <string notr="true">background-color: rgb(34, 29, 29); 
+font-size: 35px ;
+font-weight: bold ;
+color: #322886 ;
+padding-left: 25px ;</string>
     </property>
     <item>
      <property name="text">
@@ -176,14 +198,14 @@ border-radius: 15px ;
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>570</y>
-      <width>101</width>
-      <height>18</height>
+      <x>920</x>
+      <y>990</y>
+      <width>151</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(0, 0, 0) ;</string>
+     <string notr="true">color: rgb(26, 95, 180);</string>
     </property>
     <property name="text">
      <string/>
@@ -192,11 +214,15 @@ border-radius: 15px ;
    <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>400</y>
-      <width>226</width>
-      <height>26</height>
+      <x>730</x>
+      <y>710</y>
+      <width>500</width>
+      <height>50</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: grey;
+padding-left: 15px ;</string>
     </property>
     <property name="placeholderText">
      <string>                  DD/MM/YYYY</string>
@@ -208,33 +234,44 @@ border-radius: 15px ;
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>400</y>
+      <x>630</x>
+      <y>720</y>
       <width>67</width>
       <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background: transparent ;</string>
+     <string notr="true">background: transparent ;
+font-size: 22px ;
+color: white ;</string>
     </property>
     <property name="text">
-     <string>Data</string>
+     <string>Data:</string>
     </property>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>30</x>
       <y>20</y>
-      <width>74</width>
-      <height>56</height>
+      <width>171</width>
+      <height>121</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QRadioButton" name="radioButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="styleSheet">
-        <string notr="true">background: yellow ;</string>
+        <string notr="true">background: transparent ;
+font-size: 22px ;
+font-weight: bold ;
+color: white ;</string>
        </property>
        <property name="text">
         <string>Dívida</string>
@@ -243,8 +280,17 @@ border-radius: 15px ;
      </item>
      <item>
       <widget class="QRadioButton" name="radioButton_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="styleSheet">
-        <string notr="true">background: yellow ;</string>
+        <string notr="true">background: transparent ;
+font-size: 22px ;
+font-weight: bold ;
+color: white ;</string>
        </property>
        <property name="text">
         <string>Gastos</string>

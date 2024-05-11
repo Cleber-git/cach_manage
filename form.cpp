@@ -1,6 +1,5 @@
 #include "form.h"
 #include "ui_form.h"
-#include "db_manage.h"
 #include "mainwindow.h"
 #include <QDebug>
 
@@ -12,18 +11,12 @@ Form::Form(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("Tabela Geral");
 
-
-    qDebug() << "Passei pelo construtor do form";
-    db_manage C_db;
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    QString path;
-    path = qApp->applicationDirPath() + "/cach.db";
+    C_db = new db_manage();
+    db = C_db->getMDB();
+//    connect(MainWindow, SIGNAL(MainWindow::ShowDbDivida()), this, SLOT(loadDbDivida()));
 
 /////////////////////////////////////////////////////////////////////////////////
-
-
-    C_db.openDB(path, db);
-    C_db.show_managerDivida(ui->tableWidget, db);
+    C_db->show_managerDivida(ui->tableWidget, db);
 
 }
 
@@ -35,8 +28,16 @@ Form::~Form()
 
 void Form::on_pushButton_clicked()
 {
-    MainWindow *mw = new MainWindow();
-    mw->show();
+    emit sendHideFromDivida();
     hide();
+}
+
+void Form::loadDbDivida(){
+
+
+    qDebug() << "Chamei loadDbDivida";
+
+    C_db->show_managerDivida(ui->tableWidget, db);
+
 }
 

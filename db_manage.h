@@ -19,8 +19,11 @@ public:
     void Sum( QSqlDatabase& db, QLCDNumber* lcdNumber, QString mode);
     void insertDivida(QString valor, QString motivo, QString data);
     void show_managerDivida(QTableWidget *tableWidget, QSqlDatabase &db);
-
-
+    QSqlDatabase getMDB();
+    QString getPath();
+private:
+    QSqlDatabase m_db;
+    QString m_path;
 
 };
 

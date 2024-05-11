@@ -19,7 +19,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(119, 118, 123);</string>
+   <string notr="true">background:transparent;</string>
   </property>
   <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">
@@ -31,7 +31,8 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(154, 153, 150);</string>
+    <string notr="true">background:transparent;
+color: #322886;</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
@@ -50,7 +51,8 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: rgb(255, 255, 255);</string>
+    <string notr="true">background: transparent ;
+color: #322886 ;</string>
    </property>
    <property name="text">
     <string>Gerencie seus gastos</string>
@@ -73,7 +75,7 @@
    </property>
    <property name="styleSheet">
     <string notr="true">border-radius: 18px ;
-background-color: rgb(154, 153, 150);
+background-color: #322886;
 padding-left: 25px ;</string>
    </property>
    <property name="text">

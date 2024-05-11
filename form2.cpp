@@ -10,20 +10,12 @@ Form2::Form2(QWidget *parent) :
     ui(new Ui::Form2)
 {
     ui->setupUi(this);
-    this->setWindowTitle("Tabela Geral");;
+    this->setWindowTitle("Tabela Geral");
 
-    db_manage C_db;
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    QString path;
-    path = qApp->applicationDirPath() + "/cach.db";
+    C_db = new db_manage();
+    db = C_db->getMDB();
 
-
-
-    /////////////////////////////////////////////////////////////////////////////////
-
-
-    C_db.openDB(path, db);
-    C_db.show_manager(ui->tableWidget, db);
+    loadDbGasto();
 
 }
 
@@ -34,8 +26,10 @@ Form2::~Form2()
 
 void Form2::on_pushButton_clicked()
 {
-    MainWindow *mw = new MainWindow();
-    mw->show();
-    hide();
+    emit sendHide();
 }
 
+void Form2::loadDbGasto(){
+    C_db->show_manager(ui->tableWidget, db);
+
+}

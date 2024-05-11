@@ -5,6 +5,9 @@
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
 #include <QLineEdit>
+#include "form2.h"
+#include "form.h"
+
 
 #include "cont_all.h"
 
@@ -22,8 +25,13 @@ public:
     QString name_column;
 
     QString read_version();
+    void hideRefresh();
+    void moveForm( QWidget *widget ,int x, int y);
 signals:
     void send(QString name);
+    void ShowDbDivida();
+    void ShowDbGastos();
+
 public slots:
 
     void ChangeModeLabel(QString name);
@@ -33,6 +41,9 @@ public slots:
 
     void cont_all_clicked();
     void get_Name_Column(bool name);
+
+    void showRefresh();
+
 
 private slots:
 
@@ -48,7 +59,11 @@ private:
     Ui::MainWindow *ui;
     QString divida;
 
-    cont_all * ct_a= new cont_all();
+    cont_all * ct_a;
+    Form2 *form2;
+    Form *form;
+    db_manage C_db;
+
 
 };
 #endif // MAINWINDOW_H

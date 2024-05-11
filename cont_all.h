@@ -2,6 +2,7 @@
 #define CONT_ALL_H
 
 #include <QWidget>
+#include "db_manage.h"
 
 namespace Ui {
 class cont_all;
@@ -22,6 +23,9 @@ public slots:
 private:
     Ui::cont_all *ui;
     QString modeSum;
+    db_manage* C_db;
+
+
 };
 
 #endif // CONT_ALL_H

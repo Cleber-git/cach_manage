@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 #include "db_manage.h"
 #include "form.h"
-#include "form2.h"
 #include "cont_all.h"
 
 #include <QFile>
@@ -16,8 +15,25 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ct_a->show();
+
+
+    ui->radioButton_2->setChecked(true);
+
+
+    ct_a = new cont_all(this);
     ct_a->setHidden(true);
+    form2 = new Form2(this);
+    form = new Form(this);
+
+    form2->hide();
+    form->hide();
+
+    connect(form2, SIGNAL(sendHide()), this, SLOT(showRefresh()));
+    connect(form, SIGNAL(sendHideFromDivida()), this, SLOT(showRefresh()));
+
+
+
+
 
 //    ui->radioButton_2->setChecked(true);
 //    cont_all *ct_a = new cont_all();
@@ -31,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->radioButton, SIGNAL(clicked(bool)), this, SLOT(get_Name_Column(bool)));
     connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(get_Name_Column(bool)));
 
-    connect(this, SIGNAL(send(QString)), ct_a, SLOT(ChangeSum(QString)));
+
 
 
     this->setWindowTitle("Banc Manage");
@@ -39,6 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_5->setText(version);
     ui->lineEdit->hide();
     ui->label_6->hide();
+    ui->label_5->show();
 }
 
 MainWindow::~MainWindow()
@@ -50,7 +67,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
 
-    db_manage C_db;
 
 
     qDebug()<<ui->lineEdit->text();
@@ -62,27 +78,30 @@ void MainWindow::on_pushButton_clicked()
 
 
     if( !ui->motivo->text().isEmpty() && !ui->valor->text().isEmpty() && ui->lineEdit->isHidden() ){
+
         C_db.insert(preco, motivo);
+
     }else if( !ui->motivo->text().isEmpty() && !ui->valor->text().isEmpty() && !ui->lineEdit->isHidden() && !ui->lineEdit->text().isEmpty()){
+
         C_db.insertDivida(preco, motivo, divida);
+
     }
     ui->motivo->clear();
     ui->valor->clear();
     ui->lineEdit->clear();
 
     if (ui->comboBox->currentText() == "Show") {
-
         pushButton_2_clicked();
     }
-    else if(ui->comboBox->currentText() == "Delete DataBase" ){
+    else if(ui->comboBox->currentText() == "Delete DataBase"){
         b_deleteDB_clicked();
     }
     else if(ui->comboBox->currentText() == "Sum"){
-        if(name_column!= 0){
+        if(name_column != 0){
             qDebug()<< "name: "<< name_column;
 
-            emit send(name_column);
             cont_all_clicked();
+            emit send(name_column);
         }
     }
 }
@@ -108,12 +127,8 @@ void MainWindow::ChangeModeLabel(QString name){
 void MainWindow::b_deleteDB_clicked()
 {
     db_manage C_db;
-    QSqlDatabase db;
-    db = QSqlDatabase::addDatabase("QSQLITE");
-
-    QString path;
-    path =  qApp->applicationDirPath() ;
-    path +=  "/cach.db";
+    QSqlDatabase db =  C_db.getMDB();
+    QString path = C_db.getPath();
     if(ui->radioButton->isChecked()){
         C_db.Delete_db( path, db, "divida" );
 
@@ -126,9 +141,8 @@ void MainWindow::b_deleteDB_clicked()
 void MainWindow::cont_all_clicked()
 {
 
-
-    ct_a->setHidden(false);
-    setHidden(true);
+    ct_a->show();
+    moveForm(ct_a, 1500, 700);
 }
 
 
@@ -136,7 +150,7 @@ void MainWindow::cont_all_clicked()
 
 QString MainWindow::read_version(){
 
-    QFile f(qApp->applicationDirPath() + "/version.txt");
+    QFile f(qApp->applicationDirPath() + "/version");
 
     if(!f.open(QIODevice::ReadOnly)){
         qDebug() << "Erro ao tentar ler arquivo!";
@@ -160,7 +174,7 @@ void MainWindow::radio_change(bool is_active){
 
             //////////////////////////////////////////////////////
 
-            ui->pushButton->setGeometry(posx_button, 480, width_button, height_button);
+            ui->pushButton->setGeometry(posx_button, 810, width_button, height_button);
 
             ui->label_6->setHidden(false);
             ui->lineEdit->setHidden(false);
@@ -172,29 +186,93 @@ void MainWindow::radio_change1(bool is_active){
         if(is_active){
             ui->label_6->hide();
             ui->lineEdit->hide();
-            ui->pushButton->setGeometry(130, 430, 150, 51);
+            ui->pushButton->setGeometry(830, 720, 281, 61);
         }
 }
 
 
 void MainWindow::pushButton_2_clicked()
 {
-        hide();
+        hideRefresh();
         if(ui->radioButton_2->isChecked()){
-            Form2 *form2 = new Form2();
+//            emit ShowDbGastos();
+            form2->loadDbGasto();
             form2->show();
-        }else if (ui->radioButton->isChecked()) {
-            Form *form = new Form();
-            form->show();
 
+        }else if (ui->radioButton->isChecked()) {
+            form->loadDbDivida();
+            form->show();
+            moveForm(form ,650, 200);
         }
 
 }
 
 void MainWindow::get_Name_Column(bool name){
+
         if(ui->radioButton->isChecked()){
            name_column ="dividas";
             return;
         }
         name_column=  "gastos";
 }
+
+
+void MainWindow::hideRefresh(){
+
+        form2->move(650, 150);
+        ui->comboBox->hide();
+        ui->label->hide();
+        ui->label_2->hide();
+        ui->label_3->hide();
+        ui->label_4->hide();
+        ui->label_5->hide();
+        ui->label_6->hide();
+        ui->lineEdit->hide();
+        ui->motivo->hide();
+        ui->valor->hide();
+        ui->radioButton->hide();
+        ui->radioButton_2->hide();
+        ui->pushButton->hide();
+}
+
+void MainWindow::showRefresh( ){
+
+        form2->hide();
+        form->hide();
+        ui->pushButton->move(830,720);
+        ui->comboBox->show();
+        ui->label->show();
+        ui->label_2->show();
+        ui->label_3->show();
+        ui->label_4->show();
+        ui->label_5->show();
+        if(ui->radioButton->isChecked()){
+            ui->label_6->show();
+            ui->lineEdit->show();
+            ui->pushButton->move(830,810);
+
+
+        }
+        ui->motivo->show();
+        ui->valor->show();
+        ui->radioButton->show();
+        ui->radioButton_2->show();
+        ui->pushButton->show();
+}
+
+void MainWindow::moveForm( QWidget *widget, int x, int y ){
+
+        widget->move(x,y);
+
+}
+
+
+
+
+
+
+
+
+
+
+
