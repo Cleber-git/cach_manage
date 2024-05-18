@@ -4,18 +4,23 @@
 #include <QTableWidget>
 #include "mainwindow.h"
 
-
+int db_manage::countInstance = 0;
 db_manage::db_manage()
 {
-
 
     m_db = QSqlDatabase::addDatabase("QSQLITE");
 
     m_path =  qApp->applicationDirPath() ;
     m_path +=  "/cach.db";
     qDebug()<<m_path;
-    openDB(m_path, m_db);
+    openDB( m_path, m_db );
+    countInstance++;
+    qDebug() << "Número de instâncias da classe db_manage: " << QString::number(countInstance);
 
+}
+
+db_manage::~db_manage(){
+    countInstance--;
 }
 
 void db_manage::openDB( QString  Path_DB, QSqlDatabase& db )  {
@@ -58,7 +63,7 @@ void db_manage::insertDivida(QString valor, QString motivo, QString data){
     }else{
 
         qDebug() << "Executado com sucesso!";
-        m_db.close();
+//        m_db.close();
 
     }
 }
@@ -83,12 +88,10 @@ void db_manage::insert( QString valor, QString motivo){
     if ( !query.exec() ) {
 
         qDebug() << "Falha ao executar a query:: Insert";
-        m_db.close();
 
     }else{
 
         qDebug() << "Executado com sucesso! :: insert";
-        m_db.close();
 
     }
 }
@@ -99,8 +102,6 @@ void db_manage::show_managerDivida(QTableWidget *tableWidget, QSqlDatabase &db){
         tableWidget->setColumnWidth(0, 250);
         tableWidget->setColumnWidth(1,  62);
         tableWidget->setColumnWidth(2, 117);
-        QString path  = qApp->applicationDirPath() + "/cach.db";
-//        openDB(path, db);
 
         QSqlQuery query;
         QString sql;
@@ -142,13 +143,15 @@ void db_manage::show_managerDivida(QTableWidget *tableWidget, QSqlDatabase &db){
 
         }
 
-    m_db.close();
 }
 
 
 
 
 void db_manage::show_manager(QTableWidget *tableWidget, QSqlDatabase &db){
+
+//    openDB(m_path, m_db);
+
 
     tableWidget->clear();
     tableWidget->setRowCount(0);
@@ -158,7 +161,7 @@ void db_manage::show_manager(QTableWidget *tableWidget, QSqlDatabase &db){
     tableWidget->setColumnWidth(1,  62);
 
 
-    QSqlQuery query;
+    QSqlQuery query(m_db);
     QString sql;
 
     sql = "SELECT valor, motivo FROM gastos";
@@ -167,11 +170,10 @@ void db_manage::show_manager(QTableWidget *tableWidget, QSqlDatabase &db){
 
     if(!query.exec()){
 
-        qDebug() << "Falha ao abrir a base de dados!";
+        qDebug()<< "Falha ao abrir a base de dados!";
         return;
     }
 
-//    qDebug() <<"passei";
     int count = 0;
 
     int row = tableWidget->rowCount();
@@ -218,7 +220,6 @@ void db_manage::Sum( QSqlDatabase& db, QLCDNumber* lcdNumber, QString mode ){
 
     }
     lcdNumber->display(valor);
-    db.close();
 }
 
 
@@ -241,10 +242,8 @@ void db_manage::Delete_db( QString path, QSqlDatabase& db, QString mode ){
     query.prepare( sql );
     if ( query.exec() ) {
         qDebug()<<"BASE DE DADOS DELETADA COM SUCESSO!";
-        db.close();
     }else{
         qDebug()<<"NÃO FOI POSSÍVEL DELETAR A BASE DE DADOS!";
-        db.close();
 
     }
 }

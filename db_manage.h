@@ -12,6 +12,7 @@ class db_manage
 {
 public:
     db_manage();
+    ~db_manage();
     void openDB( QString  Path_DB, QSqlDatabase& db ) ;
     void insert( QString valor, QString motivo);
     void Delete_db( QString path, QSqlDatabase& db, QString mode);
@@ -24,6 +25,7 @@ public:
 private:
     QSqlDatabase m_db;
     QString m_path;
+    static int countInstance;
 
 };
 

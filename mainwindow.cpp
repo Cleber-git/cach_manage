@@ -35,7 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
-//    ui->radioButton_2->setChecked(true);
+
+    ui->radioButton_2->setChecked(true);
 //    cont_all *ct_a = new cont_all();
 
     // conecting sinais and slots
@@ -44,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->radioButton, SIGNAL(clicked(bool)), this, SLOT(radio_change(bool)));
     connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(radio_change1(bool)));
 
-    connect(ui->radioButton, SIGNAL(clicked(bool)), this, SLOT(get_Name_Column(bool)));
-    connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(get_Name_Column(bool)));
+    connect(ui->radioButton, SIGNAL(clicked(bool)), this, SLOT(set_Name_Column(bool)));
+    connect(ui->radioButton_2, SIGNAL(clicked(bool)), this, SLOT(set_Name_Column(bool)));
 
 
 
@@ -61,6 +62,10 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete ct_a;
+    delete form2;
+    delete form;
+
 }
 
 
@@ -92,16 +97,18 @@ void MainWindow::on_pushButton_clicked()
 
     if (ui->comboBox->currentText() == "Show") {
         pushButton_2_clicked();
+
     }
     else if(ui->comboBox->currentText() == "Delete DataBase"){
         b_deleteDB_clicked();
+
     }
     else if(ui->comboBox->currentText() == "Sum"){
         if(name_column != 0){
             qDebug()<< "name: "<< name_column;
-
+            ct_a->ChangeSum(name_column);
             cont_all_clicked();
-            emit send(name_column);
+
         }
     }
 }
@@ -115,8 +122,6 @@ void MainWindow::ChangeModeLabel(QString name){
     }
     ui->valor->setEnabled(true);
     ui->motivo->setEnabled(true);
-
-
 
 }
 
@@ -168,7 +173,6 @@ void MainWindow::radio_change(bool is_active){
             // get position of last widgets
 
             int posx_button = ui->pushButton->geometry().x();
-//            int posy_button = ui->pushButton->geometry().y();
             int height_button = ui->pushButton->geometry().height();
             int width_button = ui->pushButton->geometry().width();
 
@@ -207,13 +211,15 @@ void MainWindow::pushButton_2_clicked()
 
 }
 
-void MainWindow::get_Name_Column(bool name){
+void MainWindow::set_Name_Column( bool name ){
 
-        if(ui->radioButton->isChecked()){
-           name_column ="dividas";
+        if( ui->radioButton->isChecked() ){
+            name_column ="dividas";
+            qDebug()<< "Nome da coluna: [ " <<  name_column << " ]";
             return;
         }
         name_column=  "gastos";
+        qDebug()<< "Nome da coluna: [ " <<  name_column << " ]";
 }
 
 
@@ -251,7 +257,6 @@ void MainWindow::showRefresh( ){
             ui->lineEdit->show();
             ui->pushButton->move(830,810);
 
-
         }
         ui->motivo->show();
         ui->valor->show();
@@ -266,6 +271,9 @@ void MainWindow::moveForm( QWidget *widget, int x, int y ){
 
 }
 
+QString MainWindow::getNameColumn(){
+        return name_column;
+}
 
 
 

@@ -22,6 +22,7 @@ Form2::Form2(QWidget *parent) :
 Form2::~Form2()
 {
     delete ui;
+    delete C_db;
 }
 
 void Form2::on_pushButton_clicked()

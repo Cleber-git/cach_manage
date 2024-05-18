@@ -13,7 +13,6 @@ Form::Form(QWidget *parent) :
 
     C_db = new db_manage();
     db = C_db->getMDB();
-//    connect(MainWindow, SIGNAL(MainWindow::ShowDbDivida()), this, SLOT(loadDbDivida()));
 
 /////////////////////////////////////////////////////////////////////////////////
     C_db->show_managerDivida(ui->tableWidget, db);
@@ -24,6 +23,7 @@ Form::Form(QWidget *parent) :
 Form::~Form()
 {
     delete ui;
+    delete C_db;
 }
 
 void Form::on_pushButton_clicked()

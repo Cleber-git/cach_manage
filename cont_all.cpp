@@ -12,9 +12,8 @@ cont_all::cont_all(QWidget *parent) :
 
     this->setWindowTitle("TOTAL");
     C_db = new db_manage();
-    ui->pushButton->hide();
-    MainWindow mw(this);
-    connect(&mw, SIGNAL(send(QString)), this, SLOT(ChangeSum(QString)));
+//    mw = new MainWindow(this);
+//    connect(this, SIGNAL(QWidget::show()), this, SLOT(getColumn()));
 
 
 }
@@ -37,8 +36,7 @@ void cont_all::ChangeSum(QString mode){
 }
 void cont_all::on_pushButton_clicked()
 {
-    MainWindow *mw = new MainWindow();
-    mw->show();
     hide();
 }
+
 
