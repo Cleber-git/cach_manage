@@ -35,7 +35,7 @@ void Form::on_pushButton_clicked()
 void Form::loadDbDivida(){
 
 
-    qDebug() << "Chamei loadDbDivida";
+//    qDebug() << "Chamei loadDbDivida";
 
     C_db->show_managerDivida(ui->tableWidget, db);
 

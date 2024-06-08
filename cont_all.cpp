@@ -28,7 +28,7 @@ cont_all::~cont_all()
 
 void cont_all::ChangeSum(QString mode){
 
-    qDebug()<<"Passei pelo slot";
+//    qDebug()<<"Passei pelo slot";
 
     QSqlDatabase db = C_db->getMDB();
     C_db->Sum(db, ui->lcdNumber, mode);

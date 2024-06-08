@@ -111,6 +111,7 @@ void MainWindow::on_pushButton_clicked()
 
         }
     }
+    ui->valor->setFocus();
 }
 
 void MainWindow::ChangeModeLabel(QString name){
@@ -215,11 +216,11 @@ void MainWindow::set_Name_Column( bool name ){
 
         if( ui->radioButton->isChecked() ){
             name_column ="dividas";
-            qDebug()<< "Nome da coluna: [ " <<  name_column << " ]";
+//            qDebug()<< "Nome da coluna: [ " <<  name_column << " ]";
             return;
         }
         name_column=  "gastos";
-        qDebug()<< "Nome da coluna: [ " <<  name_column << " ]";
+//        qDebug()<< "Nome da coluna: [ " <<  name_column << " ]";
 }
 
 

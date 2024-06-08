@@ -15,7 +15,7 @@ db_manage::db_manage()
     qDebug()<<m_path;
     openDB( m_path, m_db );
     countInstance++;
-    qDebug() << "Número de instâncias da classe db_manage: " << QString::number(countInstance);
+//    qDebug() << "Número de instâncias da classe db_manage: " << QString::number(countInstance);
 
 }
 
@@ -35,15 +35,15 @@ void db_manage::openDB( QString  Path_DB, QSqlDatabase& db )  {
 
 void db_manage::insertDivida(QString valor, QString motivo, QString data){
 
-    qDebug() << "[insertDivida]";
+//    qDebug() << "[insertDivida]";
 
     QSqlQuery query;
     QString sql;
 
 
-    qDebug() << "Valor" << valor;
-    qDebug() << "Motivo" << motivo;
-    qDebug() << "Divida" << data;
+//    qDebug() << "Valor" << valor;
+//    qDebug() << "Motivo" << motivo;
+//    qDebug() << "Divida" << data;
 
     sql = "INSERT INTO dividas (valor, motivo, data) VALUES (:valor, :motivo, :data)";
 
@@ -69,7 +69,7 @@ void db_manage::insertDivida(QString valor, QString motivo, QString data){
 }
 
 void db_manage::insert( QString valor, QString motivo){
-    qDebug() << "[insert]";
+//    qDebug() << "[insert]";
 
     QSqlQuery query;
     QString sql;
@@ -226,7 +226,7 @@ void db_manage::Sum( QSqlDatabase& db, QLCDNumber* lcdNumber, QString mode ){
 
 void db_manage::Delete_db( QString path, QSqlDatabase& db, QString mode ){
 
-    qDebug() << "delete db";
+//    qDebug() << "delete db";
     QSqlQuery query;
     QString sql;
 
