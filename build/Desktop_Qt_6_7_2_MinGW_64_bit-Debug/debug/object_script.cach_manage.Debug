@@ -1,0 +1,13 @@
+debug/cont_all.o
+debug/db_manage.o
+debug/dialog.o
+debug/form.o
+debug/form2.o
+debug/main.o
+debug/mainwindow.o
+debug/qrc_rec.o
+debug/moc_cont_all.o
+debug/moc_dialog.o
+debug/moc_form.o
+debug/moc_form2.o
+debug/moc_mainwindow.o

@@ -104,7 +104,7 @@ void MainWindow::on_pushButton_clicked()
 
     }
     else if(ui->comboBox->currentText() == "Sum"){
-        if(name_column != 0){
+        if(name_column != ""){
             qDebug()<< "name: "<< name_column;
             ct_a->ChangeSum(name_column);
             cont_all_clicked();
